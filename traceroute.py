@@ -6,7 +6,7 @@ from scapy.sendrecv import sr
 from scapy.volatile import RandShort
 
 # Pulled from Scapy documentation, sends a packet to the google.com
-firstAns = sr(IP(dst="google.com", ttl = 28), id=RandShort()/TCP(flags=0x2))
+firstAns, deadAns = sr(IP(dst="google.com", ttl=28), id=RandShort())/ TCP(flags=0x2))
 
 # init an array for storing IPs from the trace
 IPs = []
@@ -16,7 +16,7 @@ for rcv in firstAns:
     IPs.append(rcv.src)
 
 # Creates a second request
-secAns = sr(IP(dst="yahoo.com", ttl = 28), id=RandShort()/TCP(flags=0x2))
+secAns = sr(IP(dst="yahoo.com", ttl=28), id=RandShort() / TCP(flags=0x2))
 
 # Checks each IP if it is in first stack trace, and prints it out if it is found
 for rcv in secAns:
